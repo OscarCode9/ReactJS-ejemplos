@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-<<<<<<< HEAD
 import App from './Components/nav/App';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter } from 'react-router-dom'
@@ -23,15 +22,4 @@ ReactDOM.render(
 
 
   , document.getElementById('root'));
-=======
-import Box from './Components/box/box';
-import registerServiceWorker from './registerServiceWorker';
-
-  
-
-
-
-ReactDOM.render(
-<Box />, document.getElementById('root'));
->>>>>>> 9b41f5d2ca39b0801908d6ce713960501cf8376f
 registerServiceWorker();

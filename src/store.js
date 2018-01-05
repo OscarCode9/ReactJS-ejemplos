@@ -14,6 +14,17 @@ const pokemons = (state = initialState, action) => {
       return state.filter(pokemon => pokemon.name !== action.pokemon )
       
     }
+    case 'POKEMON_FAVORITE':{
+        return state.map(function(pokemon){
+          console.log(pokemon);
+          if(pokemon.name === action.pokemon.name){
+            pokemon.favorite = !action.pokemon.favorite;
+            return pokemon
+          }else{
+            return pokemon
+          }
+        })
+      }
     default:
       return state;
       break;
