@@ -7,14 +7,13 @@ const pokemons = (state = initialState, action) => {
   switch (action.type) {
     case 'REPLACE_POKEMONS':
       return action.pokemons
-      break;
     
-    case 'DELETE_POKEMONS': {
+    case 'DELETE_POKEMONS' : {
       console.log(state)
       return state.filter(pokemon => pokemon.name !== action.pokemon )
       
     }
-    case 'POKEMON_FAVORITE':{
+    case 'POKEMON_FAVORITE' : {
         return state.map(function(pokemon){
           console.log(pokemon);
           if(pokemon.name === action.pokemon.name){
@@ -25,11 +24,13 @@ const pokemons = (state = initialState, action) => {
           }
         })
       }
+    
     default:
       return state;
       break;
   }
 }
+
 
 const logger = store => next => action => {
   console.log('dispatching', action);

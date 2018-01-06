@@ -34,4 +34,6 @@ const pokemonFavorite = pokemon => {
   }
 }
 
+
+
 export {loadPokemons, deletePokemon, pokemonFavorite}
