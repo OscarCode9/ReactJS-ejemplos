@@ -15,6 +15,8 @@ const customStyles = {
 };
 
 
+
+
 class Home extends React.Component {
   constructor() {
     super();
@@ -27,9 +29,9 @@ class Home extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
- 
-  handleClick(){
-    this.setState((prevState)=>({
+
+  handleClick() {
+    this.setState((prevState) => ({
       isFavorite: !prevState.isFavorite
     }));
 
@@ -38,7 +40,7 @@ class Home extends React.Component {
 
   componentWillMount() {
     Modal.setAppElement('body');
- }
+  }
 
   openModal(name) {
     this.setState({ modalIsOpen: true, name: name });
@@ -52,20 +54,21 @@ class Home extends React.Component {
     this.setState({ modalIsOpen: false });
   }
 
-      
+
 
   render() {
-    console.log('My state',this.state);
+    console.log('My state', this.state);
 
     let pokemonsFavorites = [];
 
     pokemonsFavorites = this.props.pokemons.filter(pokemon => pokemon.favorite !== false);
-    
+
     console.log(pokemonsFavorites);
 
-    return(
-      <div className="container">
-      <div>
+    if (pokemonsFavorites.length > 0) {
+      return (
+        <div className="container">
+          <div>
             <Modal
               isOpen={this.state.modalIsOpen}
               onAfterOpen={this.afterOpenModal}
@@ -73,22 +76,22 @@ class Home extends React.Component {
               style={customStyles}
               contentLabel="Example Modal"
             >
-              
+
               <div>¿Seguro quiere borrar este pokemon?</div>
-                <input />
-                <button onClick={this.closeModal}>Cancelar</button>
-                <button onClick={()=> {
-                  this.props.deletePokemon(this.state.name);
-                  this.setState({
-                    name: ''
-                  });
-                  this.closeModal();
-                }
-                }>Aceptar</button>
+              <input />
+              <button onClick={this.closeModal}>Cancelar</button>
+              <button onClick={() => {
+                this.props.deletePokemon(this.state.name);
+                this.setState({
+                  name: ''
+                });
+                this.closeModal();
+              }
+              }>Aceptar</button>
             </Modal>
-            
+
           </div>
-      <div className="row">
+          <div className="row">
             {pokemonsFavorites.map((pokemon, index) => (
               <div className="col s12 m6 l4" key={index}>
                 <div className="card">
@@ -107,22 +110,37 @@ class Home extends React.Component {
                     }
                     <div>
 
-                    { pokemon.favorite ? <i onClick ={()=>{this.props.pokemonFavorite(pokemon)}} className="fa fa-star fa-2x" aria-hidden="true"></i>  : <i onClick ={()=>{this.props.pokemonFavorite(pokemon)}} className="fa fa-star-o fa-2x" aria-hidden="true"></i>}
-                   
-                    <i style={{ cursor: 'pointer' }} className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={() => {this.openModal(pokemon.name)}} ></i>
+                      {pokemon.favorite ? <i onClick={() => { this.props.pokemonFavorite(pokemon) }} className="fa fa-star fa-2x" aria-hidden="true"></i> : <i onClick={() => { this.props.pokemonFavorite(pokemon) }} className="fa fa-star-o fa-2x" aria-hidden="true"></i>}
+
+                      <i style={{ cursor: 'pointer' }} className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={() => { this.openModal(pokemon.name) }} ></i>
                     </div>
-                    
+
 
                   </div>
                 </div>
               </div>
             ))}
           </div>
-      </div>
-    )
+        </div>
+      )
+
+    } else {
+      return (
+        <div className="container">
+          <div className="row center">
+            <h1>No tienes ningun favorito</h1>
+          </div>
+        </div>
+      )
+
+
+
+    }
+
+
 
   }
-    
+
 }
 
 
@@ -135,7 +153,7 @@ const mapStateToProps = state => {
   };
 }
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ deletePokemon, pokemonFavorite}, dispatch);
+  return bindActionCreators({ deletePokemon, pokemonFavorite }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

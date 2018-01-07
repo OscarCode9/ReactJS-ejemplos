@@ -25,9 +25,9 @@ const pokemons = (state = initialState, action) => {
         })
       }
     
+    
     default:
       return state;
-      break;
   }
 }
 

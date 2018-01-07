@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deletePokemon, pokemonFavorite } from '../../actionsCreators';
+import { deletePokemon, pokemonFavorite, morePokemons } from '../../actionsCreators';
 import { bindActionCreators } from 'redux';
 import Modal from 'react-modal';
 
@@ -16,6 +16,17 @@ const customStyles = {
   }
 };
 
+const buttonStyle = {
+    width: '100%',
+    height: '50px',
+    textAlign: 'center',
+    background: 'black',
+    border: 'yellow',
+    borderRadius: '10px',
+    color: 'white'
+  }
+
+
 class Home extends React.Component {
   constructor() {
     super();
@@ -23,7 +34,8 @@ class Home extends React.Component {
     this.state = {
       modalIsOpen: false,
       name: '',
-      isFavorite: true
+      isFavorite: true,
+      next: null,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -115,7 +127,9 @@ class Home extends React.Component {
                     }
                     <div>
 
-                    { pokemon.favorite ? <i onClick ={()=>{this.props.pokemonFavorite(pokemon)}} className="fa fa-star fa-2x" aria-hidden="true"></i>  : <i onClick ={()=>{this.props.pokemonFavorite(pokemon)}} className="fa fa-star-o fa-2x" aria-hidden="true"></i>}
+                    { pokemon.favorite ? <i onClick ={()=>{
+                      this.props.pokemonFavorite(pokemon)
+                    }} className="fa fa-star fa-2x" aria-hidden="true"></i>  : <i onClick ={()=>{this.props.pokemonFavorite(pokemon)}} className="fa fa-star-o fa-2x" aria-hidden="true"></i>}
                    
                     <i style={{ cursor: 'pointer' }} className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={() => {this.openModal(pokemon.name)}} ></i>
                     </div>
@@ -125,7 +139,16 @@ class Home extends React.Component {
                 </div>
               </div>
             ))}
+            
           </div>
+          <button width="100%"  style = {buttonStyle} onClick = { async ()=>{
+            const next = await this.props.morePokemons(this.props.pokemons, this.state.next);
+            console.log('Que pedo con esta url', next);
+            this.setState({
+              next: next
+            });
+
+          }}>Cargar mas Pokemones</button>
         </div>
       )
     } else {
@@ -151,7 +174,7 @@ const mapStateToProps = state => {
   };
 }
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ deletePokemon, pokemonFavorite }, dispatch);
+  return bindActionCreators({ deletePokemon, pokemonFavorite, morePokemons }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
