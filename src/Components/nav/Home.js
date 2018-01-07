@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deletePokemon, pokemonFavorite, morePokemons } from '../../actionsCreators';
+import { deletePokemon, pokemonFavorite, pokemonLike, morePokemons } from '../../actionsCreators';
 import { bindActionCreators } from 'redux';
 import Modal from 'react-modal';
 
@@ -132,6 +132,19 @@ class Home extends React.Component {
                     }} className="fa fa-star fa-2x" aria-hidden="true"></i>  : <i onClick ={()=>{this.props.pokemonFavorite(pokemon)}} className="fa fa-star-o fa-2x" aria-hidden="true"></i>}
                    
                     <i style={{ cursor: 'pointer' }} className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={() => {this.openModal(pokemon.name)}} ></i>
+                    <br/>
+                    {pokemon.liked ?<div style={{ fontSize : '23px' }}> <i style={{fontSize: '26px', color: 'red', cursor: 'pointer' }} 
+                    className="fa fa-heart fa-2x" 
+                    aria-hidden="true"
+                    onClick = {()=>{this.props.pokemonLike(pokemon)} }
+                    > </i> {pokemon.likes }</div>: <div style={{ fontSize : '23px' }}> <i style={{fontSize: '26px', color: 'black', cursor: 'pointer' }} 
+                    className="fa fa-heart-o fa-2x" 
+                    aria-hidden="true"
+                    onClick = {()=>{this.props.pokemonLike(pokemon)} }
+                    > </i>{pokemon.likes }</div> }
+                    
+                    
+
                     </div>
                     
 
@@ -174,7 +187,7 @@ const mapStateToProps = state => {
   };
 }
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ deletePokemon, pokemonFavorite, morePokemons }, dispatch);
+  return bindActionCreators({ deletePokemon, pokemonFavorite,pokemonLike, morePokemons }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

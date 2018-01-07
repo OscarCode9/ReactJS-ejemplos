@@ -24,6 +24,25 @@ const pokemons = (state = initialState, action) => {
           }
         })
       }
+    case 'POKEMON_LIKE' : {
+      return state.map(function(pokemon){
+        if(pokemon.name === action.pokemon.name){
+          if(pokemon.liked ){
+            pokemon.liked = false;
+            pokemon.likes = action.pokemon.likes - 1;
+            return pokemon
+          }else{
+            pokemon.liked = true;
+            pokemon.likes = action.pokemon.likes + 1;
+            return pokemon
+          }
+          
+        }else{
+          return pokemon
+        }
+      })
+
+    }
     
     
     default:
